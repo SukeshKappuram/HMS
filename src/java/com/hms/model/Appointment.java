@@ -17,7 +17,7 @@ public class Appointment extends DomainObject{
     private Date appointmentdate;
     private Patient patient;
     private Doctor doctor;
-    String problem;
+    private String problem;
 
     public Appointment(Date appointmentdate, Patient patient, Doctor doctor, String problem) {
         this.appointmentdate = appointmentdate;
@@ -56,6 +56,14 @@ public class Appointment extends DomainObject{
 
     public void setPatient(Patient patient) {
         this.patient = patient;
+    }
+
+    public String getProblem() {
+        return problem;
+    }
+
+    public void setProblem(String problem) {
+        this.problem = problem;
     }
     
     

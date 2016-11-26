@@ -155,20 +155,26 @@ public class UserDAOImpl implements UserDAO{
         return isValidUser;
     }
     
-    public User getPatient(int patientId) throws SQLException, ClassNotFoundException {
+    public Patient getPatient(int patientId) throws SQLException, ClassNotFoundException {
         ds.createConnection();
         ResultSet rs=ds.getSt().executeQuery("select * from patient where Id = "+patientId);
-        User u=new User(rs.getString("firstName"), rs.getString("lastName"), rs.getString("mailId"), 10001, rs.getString("phone"), rs.getDate("dob"), rs.getString("gender").charAt(0), "patient", rs.getString("zipcode"));
+        User u=null;
+        if(rs.next()){
+            u=new Patient(rs.getString("firstName"), rs.getString("lastName"), rs.getString("mailId"), 10001, rs.getString("phone"), rs.getDate("dob"), rs.getString("gender").charAt(0), "patient", rs.getString("zipcode"));
+        }
         ds.closeConnection();
-        return u;
+        return (Patient)u;
     }
     
-    public User getDoctor(int doctorId) throws SQLException, ClassNotFoundException {
+    public Doctor getDoctor(int doctorId) throws SQLException, ClassNotFoundException {
         ds.createConnection();
         ResultSet rs=ds.getSt().executeQuery("select * from Doctor where Id = "+doctorId);
-        User u=new User(rs.getString("firstName"), rs.getString("lastName"), rs.getString("mailId"), 10001, rs.getString("phone"), rs.getDate("dob"), rs.getString("gender").charAt(0), "Doctor", rs.getString("zipcode"));
+        User u=null;
+        if(rs.next()){
+            u=new Doctor(rs.getString("firstName"), rs.getString("lastName"), rs.getString("mailId"), 10001, rs.getString("phone"), rs.getDate("dob"), rs.getString("gender").charAt(0), "Doctor", rs.getString("zipcode"));
+        }
         ds.closeConnection();
-        return u;
+        return (Doctor)u;
     }
     
     public static void main(String[] arg) throws SQLException, ClassNotFoundException{

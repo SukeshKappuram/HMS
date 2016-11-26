@@ -40,7 +40,7 @@ public class AppointmentDAOImpl implements AppointmentDAO{
         UserDAOImpl ud=new UserDAOImpl();
         ResultSet rs=ds.getSt().executeQuery("select * from Appointments where "+user.getRole()+"Id = "+user.getId()+" ");
         while(rs.next()){
-            //appointments.add(new Appointment(rs.getDate("appointmentdate"),ud.getDoctor(rs.getInt("doctorId")), ud.getPatient(rs.getInt("patientId")), rs.getString("problem")));
+            appointments.add(new Appointment(rs.getDate("appointmentdate"),ud.getPatient(rs.getInt("patientId")), ud.getDoctor(rs.getInt("doctorId")), rs.getString("problem")));
         }
         ds.closeConnection();
         return appointments;

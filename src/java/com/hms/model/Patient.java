@@ -19,6 +19,10 @@ public class Patient extends User{
     public Patient(String mailId, String password) {
         super(mailId, password);
     }
+
+    public Patient(String firstName, String lastName, String mailId, long ssn, String phone, Date dob, char gender, String role, String zipCode) {
+        super(firstName, lastName, mailId, ssn, phone, dob, gender, role, zipCode);
+    }
     
     public Patient(float height, float weight, String firstName, String lastName, String mailId, long ssn, String phone, Date dob, char gender, String password, String role, String zipCode) {
         super(firstName, lastName, mailId, ssn, phone, dob, gender, password, role, zipCode);

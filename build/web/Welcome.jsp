@@ -4,6 +4,8 @@
     Author     : iamsu
 --%>
 
+<%@page import="com.hms.model.Appointment"%>
+<%@page import="com.hms.model.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="com.hms.dao.*" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -55,13 +57,45 @@
             <img class="dImage" src="http://www.ogdenclinic.com/Static/ENT/desktop/img/throatIcon_2x.png" alt="ENT Specialist"/>
             <img class="dImage" src="http://www.mcw.edu/Medical-School-FileLibrary/DEPT-Graduate-School/icons/large/Grad_Physiology_Icon.png" alt="Physiologist"/>
         </div>
-        <jsp:useBean id="ad" scope="session" class="com.hms.dao.AppointmentDAOImpl">
+        <!--
+        <%--<jsp:useBean id="ad" scope="session" class="com.hms.dao.AppointmentDAOImpl">
         <div class="appointments">
-            <c:forEach var="x" items="${ad.getAppointments(user)}">
-                <c:out value="${x}"/>
-            </c:forEach>
+            Hello1
+                        <c:forEach var="x" items="${ad.getAppointments(user)}">
+                            Hello
+                            <c:out value="${x}"/>
+                        </c:forEach>
+                    
         </div>
-        </jsp:useBean>
+        </jsp:useBean>--%>-->
+        <br/><br/>
+        <%
+            User user = (User)session.getAttribute("user");
+            AppointmentDAO ad=new AppointmentDAOImpl();
+        %>
+        <table class = "table table-striped">
+            <caption>Appointments</caption>
+            <thead>
+                <tr>
+                    <th>Doctor</th>
+                    <th>Appointment Time</th>
+                    <th>Problem</th>
+                </tr>
+            </thead>
+            <tbody>
+        <%
+            for(Appointment a:ad.getAppointments(user)){
+                %>
+                    <tr>
+                        <td><%=a.getDoctor().getFirstName()%></td>
+                        <td><%=a.getAppointmentdate()%></td>
+                        <td><%=a.getProblem()%></td>
+                    </tr>
+                <%
+            }
+        %>
+            </tbody>
+        </table>
         <%@include file="footer.html" %>
     </body>
 </html>
