@@ -6,7 +6,10 @@
 
 package com.hms.dao;
 
+import com.hms.model.Doctor;
+import com.hms.model.Patient;
 import com.hms.model.User;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -19,5 +22,8 @@ public interface UserDAO {
     public int updateUser(User user);
     public User getUser();
     public boolean isValidUser();
-    public List<User> getDoctors();
+    public List<User> getDoctors(String s) throws SQLException, ClassNotFoundException;
+    public Doctor getDoctor(int doctorId) throws SQLException, ClassNotFoundException;
+    public Patient getPatient(int patientId) throws SQLException, ClassNotFoundException ;
+    public List<Doctor> getSpecialists() throws SQLException, ClassNotFoundException;
 }

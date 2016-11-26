@@ -4,6 +4,8 @@
     Author     : iamsu
 --%>
 
+<%@page import="com.hms.model.Hospital"%>
+<%@page import="com.hms.model.Doctor"%>
 <%@page import="com.hms.model.Appointment"%>
 <%@page import="com.hms.model.User"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -30,24 +32,25 @@
     </head>
     <body>
         <%@include file="header.jsp" %>
-        
-            
-        
         <div class="user">
             <div class="row">
-                <div class="col-xs-4"><a href="">Specialist</a></div>
-                <div class="col-xs-4"><a href="">Clinics</a></div>
-                <div class="col-xs-4"><a href="viewAppointments.jsp">Appointments</a></div>
+                <div class="col-xs-4"><a href="Welcome.jsp?app=s">Specialist</a></div>
+                <div class="col-xs-4"><a href="Welcome.jsp?app=h">Clinics</a></div>
+                <div class="col-xs-4"><a href="Welcome.jsp?app=y">Appointments</a></div>
             </div>
         </div>
         
-        <div class="search" style="float: right;margin-right: 5%;">
-                <!--<i>Looking for a specialist?</i>-->
-                <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
-                <button type="submit" class="btn btn-primary btn-sm">Search</button>
-  
-                <br/><br/>
-            
+        <div class="search">
+            <form>
+                <div id="container">
+                    <div id="search-container" >
+                        <button type="submit" class="btn btn-primary btn-sm" style="float: right;">Search</button>
+                        <input id="search" class="form-control input-sm" maxlength="64" type="text" style="float: right;" placeholder="Search"/>
+                        <ul></ul>
+                    </div>
+                </div>
+            </form>
+            <div>
             <img class="dImage" src="http://katarzyna-parkot.pl/img/tooth.png" alt="Dental"/>
             <img class="dImage" src="http://www.graybill.org/wp-content/uploads/2016/03/cardiology-icon.png" alt="cardiologist"/>
             <img class="dImage" src="https://practo-fabric.s3.amazonaws.com/chatterjee-skin-care-center-delhi-1446450760-563716483e7cc.jpg" alt="Dermatologist"/>
@@ -56,6 +59,7 @@
             <img class="dImage" src="http://rathiorthoclinic.com/images/knee-icon2.png" alt="Orthopedic Surgeon"/>
             <img class="dImage" src="http://www.ogdenclinic.com/Static/ENT/desktop/img/throatIcon_2x.png" alt="ENT Specialist"/>
             <img class="dImage" src="http://www.mcw.edu/Medical-School-FileLibrary/DEPT-Graduate-School/icons/large/Grad_Physiology_Icon.png" alt="Physiologist"/>
+            </div>
         </div>
         <!--
         <%--<jsp:useBean id="ad" scope="session" class="com.hms.dao.AppointmentDAOImpl">
@@ -70,15 +74,23 @@
         </jsp:useBean>--%>-->
         
         <br/><br/>
+        <div class="container">
         <%
             User user = (User)session.getAttribute("user");
             AppointmentDAO ad=new AppointmentDAOImpl();
+            UserDAO ud=new UserDAOImpl();
         %>
+        <c:if test="${param.app=='y'}">
         <table class = "table table-striped">
-            <caption>Appointments <a href="addAppointment.jsp" title="New Appointment"><i class="fa fa-at" style="color: #808000;background-color: #f1f1f1;font-size: 30px;"></i></a></caption>
+            <caption>Appointments <c:if test="${user.role=='Patient'}"><a href="addAppointment.jsp" title="New Appointment"><i class="glyphicon glyphicon-plus" style="color: #808000;background-color: #f1f1f1;font-size: 30px;"></i></a></c:if></caption>
             <thead>
                 <tr>
-                    <th>Doctor</th>
+                    <c:if test="${user.role=='Patient'}">
+                        <th>Doctor</th>
+                    </c:if>
+                    <c:if test="${user.role=='Doctor'}">
+                        <th>Patient</th>
+                    </c:if>
                     <th>Appointment Time</th>
                     <th>Problem</th>
                 </tr>
@@ -88,7 +100,12 @@
             for(Appointment a:ad.getAppointments(user)){
                 %>
                     <tr>
-                        <td><%=a.getDoctor().getFirstName()%></td>
+                        <c:if test="${user.role=='Patient'}">
+                            <td><a href='Appointment.do?app=<%=a.getId()%>'><%=a.getDoctor().getFirstName()%></a></td>
+                        </c:if>
+                        <c:if test="${user.role=='Doctor'}">
+                            <td><a href='Appointment.do?app=<%=a.getId()%>'><%=a.getPatient().getFirstName()%></a></td>
+                        </c:if>
                         <td><%=a.getAppointmentdate()%></td>
                         <td><%=a.getProblem()%></td>
                     </tr>
@@ -97,6 +114,57 @@
         %>
             </tbody>
         </table>
+        </c:if>
+        <c:if test="${param.app=='s'}">
+        <table class = "table table-striped">
+            <caption>Specialists</caption>
+            <thead>
+                <tr>
+                    <th>Practice Name</th>
+                    <th>Practice Type</th>
+                    <th>Position</th>
+                </tr>
+            </thead>
+            <tbody>
+        <%
+            for(User u:ud.getSpecialists()){
+                Doctor d=(Doctor)u;
+                %>
+                    <tr>
+                        <td><a href='addAppointment.jsp?s=<%=d.getPracticeName()%>'><%=d.getPracticeName()%></a></td>
+                        <td><%=d.getPracticeType()%></td>
+                        <td><%=d.getPosition()%></td>
+                    </tr>
+                <%
+            }
+        %>
+            </tbody>
+        </table>
+        </c:if>
+        <c:if test="${param.app=='h'}">
+        <table class = "table table-striped">
+            <caption>Hospitals</caption>
+            <thead>
+                <tr>
+                    <th>Hospital Name</th>
+                    <th>Zip Code</th>
+                </tr>
+            </thead>
+            <tbody>
+        <%
+            for(Hospital h:ad.getHospitals()){
+                %>
+                    <tr>
+                        <td><a href='Welcome.jsp?app=s'><%=h.getHospitalName()%></a></td>
+                        <td><a href='addAppointment.jsp?h=<%=h.getId()%>'><%=h.getZipcode()%></a></td>
+                    </tr>
+                <%
+            }
+        %>
+            </tbody>
+        </table>
+        </c:if>
+        </div>
         <%@include file="footer.html" %>
     </body>
 </html>

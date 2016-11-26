@@ -72,7 +72,7 @@ public class AuthenticationController extends HttpServlet {
              if(ud.isValidUser()){
                  session.setAttribute("user", ud.getUser());
                  out.println("<script>alert('Login Successfull!!!');</script>");
-                 rd=request.getRequestDispatcher("Welcome.jsp");
+                 rd=request.getRequestDispatcher("Welcome.jsp?app=y");
              }
         }
         else{

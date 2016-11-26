@@ -25,6 +25,16 @@ public class Doctor extends User{
     public Doctor(String firstName, String lastName, String mailId, long ssn, String phone, Date dob, char gender, String role, String zipCode) {
         super(firstName, lastName, mailId, ssn, phone, dob, gender, role, zipCode);
     }
+
+    public Doctor(long npi, String practiceName, String practiceType, String position) {
+        super();
+        this.npi = npi;
+        this.practiceName = practiceName;
+        this.practiceType = practiceType;
+        this.position = position;
+    }
+    
+    
         
     public Doctor(long npi, String practiceName, String practiceType, String position, String firstName, String lastName, String mailId, long ssn, String phone, Date dob, char gender, String password, String role, String zipCode) {
         super(firstName, lastName, mailId, ssn, phone, dob, gender, password, role, zipCode);

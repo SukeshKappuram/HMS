@@ -24,6 +24,8 @@ public class User extends DomainObject{
     private String password;
     private String role;
     private String zipCode;
+    
+    public User(){}
 
     public User(String mailId, String password) {
         this.mailId = mailId;

@@ -176,58 +176,80 @@ div.scrollmenu a:hover {
         font-size: 150px;
     }
   }
- #search {
-    float: right;
-    margin-top: 9px;
-    width: 250px;
-}
-
-.search {
-    padding: 5px 0;
-    width: 330px;
-    height: 30px;
-    position: relative;
-    left: 10px;
-    float: left;
-    line-height: 22px;
-}
-
-    .search input {
-        position: absolute;
-        width: 0px;
-        float: Left;
-        margin-left: 310px;
-        -webkit-transition: all 0.7s ease-in-out;
-        -moz-transition: all 0.7s ease-in-out;
-        -o-transition: all 0.7s ease-in-out;
-        transition: all 0.7s ease-in-out;
-        height: 30px;
-        line-height: 18px;
-        padding: 0 2px 0 2px;
-        border-radius:1px;
-    }
-
-        .search:hover input, .search input:focus {
-            width: 300px;
-            margin-left: 0px;
-        }
-        
-        .search:hover i{
-            visibility: hidden;
-        }
-
-.btn {
-    height: 30px;
-    position: absolute;
-    right: 0;
-    top: 5px;
-    border-radius:1px;
-}
 .dImage{
       width: 35px;
       height: 35px;
   }
+  .search{float: right;}
+            #search-container{
+                float: center;
+}
+#search{
+ height: 30px;
+ width: 300px;
+ font-weight: bold;
+}
+#search:focus{
+ opacity: 1.0;
+}
+#search-container ul{
+position: absolute;
+ list-style: none;
+ margin: 0px;
+ padding: 0px;
+ margin-top: 30px;
+}
+#search-container ul li{
+ height: 38px;
+ width: 300px;
+ border: 1px solid #ccc;
+ background: white;
+ padding: 1px;
+ font-family: verdana;
+ color: #444;
+ border-radius: 15px;
+  outline: none;
+ padding: 3px;
+}
+#search-container ul li:hover{
+ background: lightblue;
+ cursor: pointer;
+}
+#search-container ul li img{
+ height: 31px;
+ border-radius: 5px;
+ float: right;
+}
+
         </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script>
+
+
+$(document).ready(function(){
+$('#search').bind('keyup', function(){
+
+	 var searchTerm = jQuery.trim($(this).val());
+	   if(searchTerm == ''){
+	    $('#search-container ul').html('');
+	   }else{
+		$.ajax({
+			type : "post",
+			url : "search.jsp",
+			data : {
+				input : $("#search").val()
+			},
+			beforeSend: function(){
+				$('#search-container ul').html('<li>Loading...</li>');
+			},
+			success: function(output) {
+				$('#search-container ul').html(output);
+			}
+		});
+	   }
+	});
+});
+</script>
     </head>
     <body>
         <div class="header"> All Health !! 
@@ -239,6 +261,7 @@ div.scrollmenu a:hover {
                 </c:if>
                 <c:if test="${not empty user}">
                     <a href='#'>Hi ${user.firstName} ${user.lastName} !!</a><br/>
+                    <a href='logout.jsp'>Log Out</a>
                 </c:if>
             </small>
         </div>

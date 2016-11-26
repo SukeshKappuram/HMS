@@ -14,11 +14,11 @@
     <body>
         <%
             session.setAttribute("user", null);
-            
+            session.invalidate();
         %>
-        Thank You <%=request.getParameter("n")%>
+        Thank You 
         Your Logged out Successfully!!
-        Re-Login <a href="index.html">here</a>
+        Re-Login <a href="index.jsp">here</a>
        
     </body>
 </html>

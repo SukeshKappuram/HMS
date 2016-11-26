@@ -96,9 +96,16 @@ public class UserDAOImpl implements UserDAO{
     }
 
     @Override
-    public List<User> getDoctors() {
+    public List<User> getDoctors(String s) throws SQLException, ClassNotFoundException {
         List<User> doctorList =new ArrayList<>();
-        
+        ds.createConnection();
+        ResultSet rs=ds.getSt().executeQuery("select * from Doctor where PracticeName like '%"+s+"%'");
+        User u=null;
+        while(rs.next()){
+            u=new Doctor(rs.getString("firstName"), rs.getString("lastName"), rs.getString("mailId"), 10001, rs.getString("phone"), rs.getDate("dob"), rs.getString("gender").charAt(0), "Doctor", rs.getString("zipcode"));
+            doctorList.add(u);
+        }
+        ds.closeConnection();
         return doctorList;
     }
 
@@ -177,6 +184,35 @@ public class UserDAOImpl implements UserDAO{
         return (Doctor)u;
     }
     
+    public User getUser(int userId,String table) throws SQLException, ClassNotFoundException {
+        ds.createConnection();
+        ResultSet rs=ds.getSt().executeQuery("select * from "+table+" where Id = "+userId);
+        User u=null;
+        if(rs.next()){
+            if(table.equals("Doctor")){
+                u=new Doctor(rs.getString("firstName"), rs.getString("lastName"), rs.getString("mailId"), 10001, rs.getString("phone"), rs.getDate("dob"), rs.getString("gender").charAt(0), "Doctor", rs.getString("zipcode"));
+            }
+            else{
+                u=new Patient(rs.getString("firstName"), rs.getString("lastName"), rs.getString("mailId"), 10001, rs.getString("phone"), rs.getDate("dob"), rs.getString("gender").charAt(0), "patient", rs.getString("zipcode"));
+            }
+        }
+        ds.closeConnection();
+        return (Doctor)u;
+    }
+    
+    public List<Doctor> getSpecialists() throws SQLException, ClassNotFoundException{
+        List<Doctor> specialList =new ArrayList<>();
+        ds.createConnection();
+        ResultSet rs=ds.getSt().executeQuery("select distinct(PRACTICENAME),PRACTICETYPE,Position,npi from Doctor");
+        Doctor d=null;
+        while(rs.next()){
+           d=new Doctor(Long.parseLong(rs.getString("npi")),rs.getString("PRACTICENAME"),rs.getString("PRACTICETYPE"),rs.getString("Position"));
+           specialList.add(d);
+        }
+        ds.closeConnection();
+        return specialList;
+    }
+    
     public static void main(String[] arg) throws SQLException, ClassNotFoundException{
         DataSouce ds=new DataSouce();
         ds.createConnection();
@@ -188,3 +224,4 @@ public class UserDAOImpl implements UserDAO{
         ds.closeConnection();
     } 
 }
+

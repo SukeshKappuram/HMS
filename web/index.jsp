@@ -88,22 +88,7 @@
             </div>
         </div>
         <br/>
-        <div class="search">
-                <!--<i>Looking for a specialist?</i>-->
-                <input type="text" class="form-control input-sm" maxlength="64" placeholder="Search" />
-                <button type="submit" class="btn btn-primary btn-sm">Search</button>
-  
-                <br/><br/>
-            
-            <img class="dImage" src="http://katarzyna-parkot.pl/img/tooth.png" alt="Dental"/>
-            <img class="dImage" src="http://www.graybill.org/wp-content/uploads/2016/03/cardiology-icon.png" alt="cardiologist"/>
-            <img class="dImage" src="https://practo-fabric.s3.amazonaws.com/chatterjee-skin-care-center-delhi-1446450760-563716483e7cc.jpg" alt="Dermatologist"/>
-            <img class="dImage" src="https://cdn2.iconfinder.com/data/icons/medical-specialties-1/256/Neurology-512.png" alt="Neurologist"/>
-            <img class="dImage" src="http://unconfirmedbreakingnews.com/wp-content/uploads/2014/03/8059487-757877-head-brain-vector-icon.jpg" alt="Psychiatrist"/>
-            <img class="dImage" src="http://rathiorthoclinic.com/images/knee-icon2.png" alt="Orthopedic Surgeon"/>
-            <img class="dImage" src="http://www.ogdenclinic.com/Static/ENT/desktop/img/throatIcon_2x.png" alt="ENT Specialist"/>
-            <img class="dImage" src="http://www.mcw.edu/Medical-School-FileLibrary/DEPT-Graduate-School/icons/large/Grad_Physiology_Icon.png" alt="Physiologist"/>
-        </div>
+        
         
         <div style="float: left;">
             <c:if test="${empty param.r}">
@@ -122,6 +107,26 @@
                 <br/><a href="">Contact Us</a><br/>
             </div>
         </div>
+        <div class="search">
+            <form>
+                <div id="container">
+                    <div id="search-container" >
+                        <button type="submit" class="btn btn-primary btn-sm" style="float: right;">Search</button>
+                        <input id="search" class="form-control input-sm" maxlength="64" type="text" style="float: right;" placeholder="Search"/>
+                        <ul></ul>
+                    </div>
+                </div>
+            </form>
+            <div>
+            <img class="dImage" src="http://katarzyna-parkot.pl/img/tooth.png" alt="Dental"/>
+            <img class="dImage" src="http://www.graybill.org/wp-content/uploads/2016/03/cardiology-icon.png" alt="cardiologist"/>
+            <img class="dImage" src="https://practo-fabric.s3.amazonaws.com/chatterjee-skin-care-center-delhi-1446450760-563716483e7cc.jpg" alt="Dermatologist"/>
+            <img class="dImage" src="https://cdn2.iconfinder.com/data/icons/medical-specialties-1/256/Neurology-512.png" alt="Neurologist"/>
+            <img class="dImage" src="http://unconfirmedbreakingnews.com/wp-content/uploads/2014/03/8059487-757877-head-brain-vector-icon.jpg" alt="Psychiatrist"/>
+            <img class="dImage" src="http://rathiorthoclinic.com/images/knee-icon2.png" alt="Orthopedic Surgeon"/>
+            <img class="dImage" src="http://www.ogdenclinic.com/Static/ENT/desktop/img/throatIcon_2x.png" alt="ENT Specialist"/>
+            <img class="dImage" src="http://www.mcw.edu/Medical-School-FileLibrary/DEPT-Graduate-School/icons/large/Grad_Physiology_Icon.png" alt="Physiologist"/>
+            </div>
         </div>
         <%@include file="footer.html" %>
     </body>

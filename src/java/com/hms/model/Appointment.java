@@ -19,6 +19,17 @@ public class Appointment extends DomainObject{
     private Doctor doctor;
     private String problem;
 
+    public Appointment() {
+    }
+    
+    public Appointment(int id, Date appointmentdate, Patient patient, Doctor doctor, String problem) {
+        this.id = id;
+        this.appointmentdate = appointmentdate;
+        this.patient = patient;
+        this.doctor = doctor;
+        this.problem = problem;
+    }
+    
     public Appointment(Date appointmentdate, Patient patient, Doctor doctor, String problem) {
         this.appointmentdate = appointmentdate;
         this.patient = patient;
