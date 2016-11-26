@@ -68,13 +68,14 @@
                     
         </div>
         </jsp:useBean>--%>-->
+        
         <br/><br/>
         <%
             User user = (User)session.getAttribute("user");
             AppointmentDAO ad=new AppointmentDAOImpl();
         %>
         <table class = "table table-striped">
-            <caption>Appointments</caption>
+            <caption>Appointments <a href="addAppointment.jsp" title="New Appointment"><i class="fa fa-at" style="color: #808000;background-color: #f1f1f1;font-size: 30px;"></i></a></caption>
             <thead>
                 <tr>
                     <th>Doctor</th>
